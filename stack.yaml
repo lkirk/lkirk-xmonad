@@ -39,10 +39,17 @@ packages:
 # - git: https://github.com/commercialhaskell/stack.git
 #   commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a
 #
-# extra-deps: []
+extra-deps:
+- xmonad-contrib-0.16@sha256:2180158db559b2a0507c2246b129ee0918b5143be6eff5fb7fdae027fc9a356e,16297
+- xmonad-0.15@sha256:8da7cffd1d1f837f4559d9f69e86db58f022231b4996ef3fc894c28bb149107b,5397
+- xmobar-0.38@sha256:f58ff3e2d6366c7d782c1e4406dcc152641f431a3bd492b7ab1dde34ca4624df,12080
 
+#
 # Override default flag values for local packages and extra-deps
-# flags: {}
+flags:
+  xmobar:
+    with_xft: true
+
 
 # Extra package databases containing global packages
 # extra-package-dbs: []
