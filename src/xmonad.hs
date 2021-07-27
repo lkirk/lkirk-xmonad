@@ -2,8 +2,8 @@
 import XMonad
 import XMonad.Layout
 import XMonad.Layout.ResizableTile
---import XMonad.Layout.Spiral
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageHelpers (composeOne, doCenterFloat, isDialog, (-?>))
 import XMonad.Util.Run(safeSpawnProg, runInTerm)
 import qualified Data.Map as M
 import Graphics.X11.ExtraTypes.XF86( xF86XK_AudioRaiseVolume
@@ -68,10 +68,14 @@ layout = ResizableTall 1 (3/100) (1/2) []
       ratio   = 1/2   -- default proportion of screen occupied by master pane
       delta   = 3/100 -- percent of screen to increment by when resizing panes
 
+mhook = composeOne [ isDialog     -?> doCenterFloat ]
+                    <+> composeAll [ className =? "zoom" --> doFloat ]
+
 main = xmonad =<< xmobar defaultConfig
        {
         terminal    = "xterm"
        , borderWidth = 0
        , keys = keyLayout
        , layoutHook = layout
+       , manageHook = mhook
        }
