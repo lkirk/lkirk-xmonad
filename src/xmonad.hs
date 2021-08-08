@@ -1,6 +1,6 @@
 {-# LANGUAGE RecordWildCards #-}
 import XMonad
-import XMonad.Layout
+import qualified XMonad.Config as DefaultConfig
 import XMonad.Layout.ResizableTile
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers (composeOne, doCenterFloat, isDialog, (-?>))
@@ -13,20 +13,24 @@ import Graphics.X11.ExtraTypes.XF86( xF86XK_AudioRaiseVolume
                                    , xF86XK_MonBrightnessUp
                                    )
 
+scrot :: [Char]
 scrot = "scrot -e 'mv $f ~/screenshots'"
+scrotMouse :: [Char]
 scrotMouse = "sleep 0.2; " ++ scrot ++ " -s"
 
 -- NB: trailing slash
+keybindScripts :: [Char]
 keybindScripts = "/home/lkirk/.xmonad/keybind_scripts/"
 
-keyLayout = keys defaultConfig <+> \conf@(XConfig { .. })
+keyLayout :: XConfig Layout -> M.Map (ButtonMask, KeySym) (X ())
+keyLayout = keys DefaultConfig.def <+> \conf@(XConfig { .. })
    -> M.fromList
       [ ((0, xF86XK_AudioRaiseVolume), spawn "amixer -c PCH set Master 4+")
       , ((0, xF86XK_AudioLowerVolume), spawn "amixer -c PCH set Master 4-")
       , ((0, xF86XK_AudioMute), spawn "amixer set Master toggle")
 
-      , ((shiftMask, xF86XK_AudioRaiseVolume), spawn "amixer -c PCH set Master 2+")
-      , ((shiftMask, xF86XK_AudioLowerVolume), spawn "amixer -c PCH set Master 2-")
+      , ((shiftMask, xF86XK_AudioRaiseVolume), spawn "amixer set Master 2+")
+      , ((shiftMask, xF86XK_AudioLowerVolume), spawn "amixer set Master 2-")
 
       , ((modMask .|. shiftMask, xK_f), spawn (keybindScripts ++ "browser"))
       -- NB: not in keybind dir
@@ -47,6 +51,9 @@ keyLayout = keys defaultConfig <+> \conf@(XConfig { .. })
       , ((modMask .|. shiftMask, xK_z),  -- "Local emacs"
               runInTerm "-title emacs" (keybindScripts ++ "emacs"))
 
+      , ((modMask .|. shiftMask .|. controlMask, xK_z),  -- "Local emacs gtk"
+              safeSpawnProg (keybindScripts ++ "emacs-gtk"))
+
       , ((modMask .|. shiftMask, xK_s),  -- "Sound control"
               runInTerm "-title alsamixer" (keybindScripts ++ "alsamixer"))
 
@@ -58,6 +65,7 @@ keyLayout = keys defaultConfig <+> \conf@(XConfig { .. })
       , ((modMask .|. shiftMask, xK_minus), sendMessage MirrorShrink)
       , ((modMask .|. shiftMask, xK_equal), sendMessage MirrorExpand)]
 
+layout :: Choose ResizableTall (Choose (Mirror Tall) Full) a
 layout = ResizableTall 1 (3/100) (1/2) []
          ||| Mirror tiled
          ||| Full
@@ -68,10 +76,12 @@ layout = ResizableTall 1 (3/100) (1/2) []
       ratio   = 1/2   -- default proportion of screen occupied by master pane
       delta   = 3/100 -- percent of screen to increment by when resizing panes
 
+mhook :: ManageHook
 mhook = composeOne [ isDialog     -?> doCenterFloat ]
                     <+> composeAll [ className =? "zoom" --> doFloat ]
 
-main = xmonad =<< xmobar defaultConfig
+main :: IO()
+main = xmonad =<< xmobar DefaultConfig.def
        {
         terminal    = "xterm"
        , borderWidth = 0
