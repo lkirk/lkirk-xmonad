@@ -7,12 +7,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install required system libraries
-        run: >
+        run: |
+          sudo apt-get update
           sudo apt-get install
-            libx11-dev
-            libxft-dev
-            libxinerama-dev
-            libxrandr-dev
+            libx11-dev \
+            libxft-dev \
+            libxinerama-dev \
+            libxrandr-dev \
             libxss-dev
       - name: Setup Haskell/Stack
         uses: haskell/actions/setup@v2
