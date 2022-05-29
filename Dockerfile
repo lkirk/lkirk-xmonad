@@ -3,7 +3,6 @@ FROM debian:buster-slim
 RUN \
     set -ex; \
     uname -a; \
-    ; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
@@ -17,7 +16,6 @@ RUN \
         libncurses5 \
         libncurses-dev \
         libtinfo5 \
-    ; \
     export BOOTSTRAP_HASKELL_NONINTERACTIVE=1; \
     export BOOTSTRAP_HASKELL_INSTALL_STACK=1; \
     curl --proto '=https' --tlsv1.2 -sSf --output get-ghcup https://get-ghcup.haskell.org; \
