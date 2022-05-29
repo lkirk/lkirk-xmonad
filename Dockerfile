@@ -31,6 +31,6 @@ RUN \
             cat $f; \
         done; \
         echo 'build failed, see logs' >&2; \
-        exit 1;
+        exit 1; \
     fi; \
     set -e
