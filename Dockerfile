@@ -25,8 +25,8 @@ RUN \
     set +e; \
     ./get-ghcup; \
     if [ $? != 0 ]; then \
-        for f in /root/.ghcup/logs/*; \
-            do echo $f; \
+        for f in /root/.ghcup/logs/*; do \
+            echo $f; \
             cat $f; \
         done; \
     fi; \
