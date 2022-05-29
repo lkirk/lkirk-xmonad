@@ -30,4 +30,4 @@ RUN \
             cat $f; \
         done; \
     fi; \
-    set -e; \
+    set -e
