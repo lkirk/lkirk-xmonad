@@ -42,4 +42,5 @@ jobs:
           #     password: ${{ secrets.QUAY_IO_PASSWORD }}
       - name: Build
         uses: docker/build-push-action@v3
-        platforms: linux/amd64,linux/arm64
+        with:
+          platforms: linux/amd64,linux/arm64
