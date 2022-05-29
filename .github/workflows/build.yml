@@ -36,7 +36,7 @@ jobs:
         run: |
           set -x
           docker images
-          docker run --rm arm64/debian uname -a
+          docker run --rm arm64v8/debian uname -a
           #      - name: Set up Docker Buildx
           #        uses: docker/setup-buildx-action@v2
           #      - name: Login to DockerHub
