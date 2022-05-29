@@ -36,8 +36,7 @@ jobs:
         run: |
           set -x
           docker images
-          docker run --rm arm64v8/alpine uname -a
-          docker ps -a
+          docker run --rm amd64/alpine uname -a
           #      - name: Set up Docker Buildx
           #        uses: docker/setup-buildx-action@v2
           #      - name: Login to DockerHub
