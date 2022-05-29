@@ -16,6 +16,7 @@ RUN \
         libgmp-dev \
         libncurses5 \
         libncurses-dev \
+        libnuma-dev \
         libtinfo5 \
     ; \
     export BOOTSTRAP_HASKELL_NONINTERACTIVE=1; \
@@ -29,5 +30,7 @@ RUN \
             echo $f; \
             cat $f; \
         done; \
+        echo 'build failed, see logs' >&2; \
+        exit 1;
     fi; \
     set -e
