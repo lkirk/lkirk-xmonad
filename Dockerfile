@@ -23,11 +23,4 @@ RUN \
     curl --proto '=https' --tlsv1.2 -sSf --output get-ghcup https://get-ghcup.haskell.org; \
     chmod +x get-ghcup; \
     set +e; \
-    ./get-ghcup; \
-    if [ $? != 0 ]; then \
-        for f in /root/.ghcup/logs/*; do \
-            echo $f; \
-            cat $f; \
-        done; \
-    fi; \
-    set -e
+    ./get-ghcup
