@@ -2,6 +2,7 @@ FROM debian:bookworm-slim
 RUN \
     set -ex; \
     uname -a; \
+    apt-get update; \
     apt-get install -y --no-install-recommends \
         curl \
     ; \
