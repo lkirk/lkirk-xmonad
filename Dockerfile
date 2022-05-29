@@ -11,4 +11,6 @@ RUN \
     export BOOTSTRAP_HASKELL_NONINTERACTIVE=1; \
     curl --proto '=https' --tlsv1.2 -sSf --output get-ghcup https://get-ghcup.haskell.org; \
     chmod +x get-ghcup; \
-    ./get-ghcup
+    ./get-ghcup || true; \
+    cat /root/.ghcup/logs; \
+    exit 1
