@@ -6,7 +6,9 @@ RUN \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         ca-certificates \
+        clang \
         curl \
+        gcc \
     ; \
     export BOOTSTRAP_HASKELL_NONINTERACTIVE=1; \
     curl --proto '=https' --tlsv1.2 -sSf --output get-ghcup https://get-ghcup.haskell.org; \
