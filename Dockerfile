@@ -5,6 +5,7 @@ RUN \
     uname -a; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
+        ca-certificates \
         curl \
     ; \
     export BOOTSTRAP_HASKELL_NONINTERACTIVE=1; \
