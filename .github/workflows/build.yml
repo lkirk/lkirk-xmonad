@@ -1,9 +1,9 @@
 name: Build XMonad
 on: [push]
 jobs:
-  build-arm64:
+  build:
     runs-on: ubuntu-latest
-    name: Build xmonad on arm64
+    name: Build xmonad
     steps:
       - name: Checkout
         uses: actions/checkout@v3
