@@ -1,36 +1,18 @@
-FROM debian:buster-slim
-
-RUN \
-    set -ex; \
-    uname -a; \
-    \
-    export DEBIAN_FRONTEND=noninteractive; \
+FROM quay.io/lkirk/haskell-stack as builder
+RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
-        build-essential \
-        ca-certificates \
-        curl \
-        libffi6 \
-        libffi-dev \
-        libgmp10 \
-        libgmp-dev \
-        libncurses5 \
-        libncurses-dev \
-        libnuma-dev \
-        libtinfo5 \
-    ; \
-    export BOOTSTRAP_HASKELL_NONINTERACTIVE=1; \
-    export BOOTSTRAP_HASKELL_INSTALL_STACK=1; \
-    curl --proto '=https' --tlsv1.2 -sSf --output get-ghcup https://get-ghcup.haskell.org; \
-    chmod +x get-ghcup; \
-    set +e; \
-    ./get-ghcup; \
-    if [ $? != 0 ]; then \
-        for f in /root/.ghcup/logs/*; do \
-            echo $f; \
-            cat $f; \
-        done; \
-        echo 'build failed, see logs' >&2; \
-        exit 1; \
-    fi; \
-    set -e
+      libx11-dev \
+      libxft-dev \
+      libxinerama-dev \
+      libxrandr-dev \
+      libxss-dev
+
+WORKDIR /build
+ADD . .
+RUN stack build
+
+
+FROM scratch
+COPY --from=builder /root/.stack/snapshots/x86_64-linux-tinfo6/bf68e38f1cb3b9a0f169e9800fc40a8bb0c950626f03cfecd077e31f845e75de/8.10.7/bin/xmonad /
+COPY --from=builder /root/.stack/snapshots/x86_64-linux-tinfo6/bf68e38f1cb3b9a0f169e9800fc40a8bb0c950626f03cfecd077e31f845e75de/8.10.7/bin/xmobar /
