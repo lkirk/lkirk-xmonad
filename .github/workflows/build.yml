@@ -15,5 +15,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           platforms: linux/arm64
-          outputs:
-            - type=local,dest=build-output
+          outputs: type=local,dest=build-output
