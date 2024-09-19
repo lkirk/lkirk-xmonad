@@ -13,9 +13,9 @@ import XMonad
 import qualified XMonad.Config as DefaultConfig
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers (composeOne, doCenterFloat, isDialog, (-?>))
+import XMonad.Hooks.ManageHelpers (composeOne, doCenterFloat, isDialog, isNotification, (-?>))
 import XMonad.Layout.CenteredIfSingle
-import XMonad.Layout.Named
+import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.SubLayouts
 import XMonad.Layout.Tabbed
@@ -113,7 +113,10 @@ layout =
 
 mhook :: ManageHook
 mhook =
-  composeOne [isDialog -?> doCenterFloat]
+  composeOne
+    [ isDialog -?> doCenterFloat,
+      isNotification -?> doIgnore
+    ]
     <+> composeAll [className =? "zoom" --> doFloat]
 
 main :: IO ()
